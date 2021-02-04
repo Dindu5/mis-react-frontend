@@ -44,12 +44,22 @@ const Password = ({ className, ...rest }) => {
         <CardContent>
           <TextField
             fullWidth
-            label="Password"
+            label="Old Password"
             margin="normal"
             name="password"
             onChange={handleChange}
             type="password"
             value={values.password}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="New Password"
+            margin="normal"
+            name="confirm"
+            onChange={handleChange}
+            type="password"
+            value={values.confirm}
             variant="outlined"
           />
           <TextField

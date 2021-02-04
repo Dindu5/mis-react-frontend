@@ -35,17 +35,11 @@ const Toolbar = ({ className, ...rest }) => {
         display="flex"
         justifyContent="flex-end"
       >
-        <Button className={classes.importButton}>
-          Import
-        </Button>
-        <Button className={classes.exportButton}>
-          Export
-        </Button>
         <Button
           color="primary"
           variant="contained"
         >
-          Add customer
+          Register Students
         </Button>
       </Box>
       <Box mt={3}>
@@ -66,7 +60,7 @@ const Toolbar = ({ className, ...rest }) => {
                     </InputAdornment>
                   )
                 }}
-                placeholder="Search customer"
+                placeholder="Search Students"
                 variant="outlined"
               />
             </Box>

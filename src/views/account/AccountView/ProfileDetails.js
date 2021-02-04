@@ -16,15 +16,15 @@ import {
 const states = [
   {
     value: 'alabama',
-    label: 'Alabama'
+    label: 'Anambra'
   },
   {
     value: 'new-york',
-    label: 'New York'
+    label: 'Bauchi'
   },
   {
     value: 'san-francisco',
-    label: 'San Francisco'
+    label: 'Bayelsa'
   }
 ];
 
@@ -35,12 +35,12 @@ const useStyles = makeStyles(() => ({
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
+    firstName: 'Mr',
+    lastName: 'Diala',
+    email: 'demo@email.com',
     phone: '',
-    state: 'Alabama',
-    country: 'USA'
+    state: 'Imo',
+    country: 'Nigeria'
   });
 
   const handleChange = (event) => {

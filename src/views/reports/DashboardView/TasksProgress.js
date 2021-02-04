@@ -12,7 +12,7 @@ import {
   makeStyles,
   colors
 } from '@material-ui/core';
-import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
+import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -45,24 +45,24 @@ const TasksProgress = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TASKS PROGRESS
+              Verified Students
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              75.5%
+              15.5%
             </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <InsertChartIcon />
+              <PeopleIcon />
             </Avatar>
           </Grid>
         </Grid>
         <Box mt={3}>
           <LinearProgress
-            value={75.5}
+            value={15.5}
             variant="determinate"
           />
         </Box>

@@ -83,7 +83,7 @@ const RegisterView = () => {
                     gutterBottom
                     variant="body2"
                   >
-                    Use your email to create new account
+                    Only authorised lecturers can register
                   </Typography>
                 </Box>
                 <TextField

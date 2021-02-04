@@ -78,7 +78,7 @@ const Results = ({ className, customers, ...rest }) => {
       {...rest}
     >
       <PerfectScrollbar>
-        <Box minWidth={1050}>
+        <Box minWidth={850}>
           <Table>
             <TableHead>
               <TableRow>
@@ -100,7 +100,7 @@ const Results = ({ className, customers, ...rest }) => {
                   Email
                 </TableCell>
                 <TableCell>
-                  Location
+                  Department
                 </TableCell>
                 <TableCell>
                   Phone

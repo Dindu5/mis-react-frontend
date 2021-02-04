@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Drawer,
   Hidden,
@@ -17,42 +16,72 @@ import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
   Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Database as DatabaseIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+  jobTitle: 'Lecturer',
+  name: 'Mr Diala'
 };
 
 const items = [
   {
-    href: '/app/dashboard',
+    href: '/portal/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard'
   },
   {
-    href: '/app/customers',
+    href: '/portal/products',
     icon: UsersIcon,
-    title: 'Customers'
+    title: 'Register Students'
   },
   {
-    href: '/app/products',
-    icon: ShoppingBagIcon,
-    title: 'Products'
+    href: '/portal/students',
+    icon: DatabaseIcon,
+    title: 'SAAT'
   },
   {
-    href: '/app/account',
+    href: '/portal/students',
+    icon: DatabaseIcon,
+    title: 'SOBS'
+  },
+  {
+    href: '/portal/students',
+    icon: DatabaseIcon,
+    title: 'SEET'
+  },
+  {
+    href: '/portal/students',
+    icon: DatabaseIcon,
+    title: 'SOES'
+  },
+  {
+    href: '/portal/students',
+    icon: DatabaseIcon,
+    title: 'SMAT'
+  },
+  {
+    href: '/portal/students',
+    icon: DatabaseIcon,
+    title: 'SHOT'
+  },
+  {
+    href: '/portal/students',
+    icon: DatabaseIcon,
+    title: 'SCIT'
+  },
+  {
+    href: '/portal/account',
     icon: UserIcon,
     title: 'Account'
   },
   {
-    href: '/app/settings',
+    href: '/portal/settings',
     icon: SettingsIcon,
     title: 'Settings'
   },
@@ -116,7 +145,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
-          to="/app/account"
+          to="/portal/account"
         />
         <Typography
           className={classes.name}
@@ -146,39 +175,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         </List>
       </Box>
       <Box flexGrow={1} />
-      <Box
-        p={2}
-        m={2}
-        bgcolor="background.dark"
-      >
-        <Typography
-          align="center"
-          gutterBottom
-          variant="h4"
-        >
-          Need more?
-        </Typography>
-        <Typography
-          align="center"
-          variant="body2"
-        >
-          Upgrade to PRO version and access 20 more screens
-        </Typography>
-        <Box
-          display="flex"
-          justifyContent="center"
-          mt={2}
-        >
-          <Button
-            color="primary"
-            component="a"
-            href="https://react-material-kit.devias.io"
-            variant="contained"
-          >
-            See PRO version
-          </Button>
-        </Box>
-      </Box>
     </Box>
   );
 
