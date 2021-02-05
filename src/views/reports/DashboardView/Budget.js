@@ -58,7 +58,7 @@ const Budget = ({ className, ...rest }) => {
               color="textPrimary"
               variant="h3"
             >
-              $4,000
+              ₦4,000
             </Typography>
           </Grid>
           <Grid item>

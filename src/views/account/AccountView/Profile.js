@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
+  avatar: '/static/download.png',
   city: 'Owerri',
   country: 'Nigeria',
   jobTitle: 'Lecturer',

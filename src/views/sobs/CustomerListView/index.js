@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CustomerListView = () => {
+const SobsListView = () => {
   const classes = useStyles();
   const [customers] = useState(data);
   const theme = useTheme();
@@ -80,20 +80,17 @@ const CustomerListView = () => {
   };
 
   const departments = [
-    { value: 'AEX', name: 'Agricultural Extension' },
-    { value: 'AEC', name: 'Agricultural Economics' },
-    { value: 'AST', name: 'Animal Science and Technology' },
-    { value: 'CST', name: 'Crop Science and Technology' },
-    { value: 'FAT', name: 'Fisheries and Aquaticulture Technology' },
-    { value: 'FWT', name: 'Forestry and Widelife Technology' },
-    { value: 'SST', name: 'Soil Science Technology' },
+    { value: 'BCH', name: 'Biochemisty' },
+    { value: 'BIO', name: 'Biology' },
+    { value: 'BTC', name: 'Biotechnology' },
+    { value: 'MCB', name: 'Micro Biology' },
   ];
 
   return (
     <div className={classes.root}>
       <Page
         className={classes.table}
-        title="School of Agriculture and Agricultural Technology"
+        title="School of Boilogical Sciences"
       >
         <AppBar position="static" color="paper">
           <Tabs
@@ -132,4 +129,4 @@ const CustomerListView = () => {
   );
 };
 
-export default CustomerListView;
+export default SobsListView;

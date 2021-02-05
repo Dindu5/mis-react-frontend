@@ -24,7 +24,7 @@ import {
 import NavItem from './NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
+  avatar: '/static/download.png',
   jobTitle: 'Lecturer',
   name: 'Mr Diala'
 };
@@ -41,37 +41,37 @@ const items = [
     title: 'Register Students'
   },
   {
-    href: '/portal/students',
+    href: '/portal/saat',
     icon: DatabaseIcon,
     title: 'SAAT'
   },
   {
-    href: '/portal/students',
+    href: '/portal/sobs',
     icon: DatabaseIcon,
     title: 'SOBS'
   },
   {
-    href: '/portal/students',
+    href: '/portal/seet',
     icon: DatabaseIcon,
     title: 'SEET'
   },
   {
-    href: '/portal/students',
+    href: '/portal/soes',
     icon: DatabaseIcon,
     title: 'SOES'
   },
   {
-    href: '/portal/students',
+    href: '/portal/smat',
     icon: DatabaseIcon,
     title: 'SMAT'
   },
   {
-    href: '/portal/students',
+    href: '/portal/shot',
     icon: DatabaseIcon,
     title: 'SHOT'
   },
   {
-    href: '/portal/students',
+    href: '/portal/scit',
     icon: DatabaseIcon,
     title: 'SCIT'
   },

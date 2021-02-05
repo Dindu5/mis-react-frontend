@@ -108,7 +108,8 @@ const ProductList = () => {
       <Container maxWidth={false}>
         <Box mt={3}>
           <Grid container spacing={3}>
-            <Grid item lg={6} md={12} xs={12}>
+            <Grid item lg={3} md={3} xs={0} />
+            <Grid item lg={6} md={6} xs={12}>
               <form className={classes.form}>
                 <Card>
                   <CardHeader subheader="Enter students details to register them for CSC 201 Manual collection" title="Register Students" />
@@ -182,7 +183,14 @@ const ProductList = () => {
                         name="faculty"
                       >
                         {futoData.map((school) => {
-                          return <MenuItem value={school.school}>{school.name}</MenuItem>;
+                          return (
+                            <MenuItem
+                              key={school.name}
+                              value={school.school}
+                            >
+                              {school.name}
+                            </MenuItem>
+                          );
                         })}
                       </Select>
                     </FormControl>
@@ -197,7 +205,14 @@ const ProductList = () => {
                         name="department"
                       >
                         {departments.map((department) => {
-                          return <MenuItem value={department.value}>{department.name}</MenuItem>;
+                          return (
+                            <MenuItem
+                              key={department.name}
+                              value={department.value}
+                            >
+                              {department.name}
+                            </MenuItem>
+                          );
                         })}
                       </Select>
                     </FormControl>

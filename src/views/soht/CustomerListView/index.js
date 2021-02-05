@@ -11,8 +11,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Page from 'src/components/Page';
-import Results from '../../../components/Results';
-import Toolbar from '../../../components/Toolbar';
+import Results from './Results';
+import Toolbar from './Toolbar';
 import data from './data';
 
 function TabPanel(props) {
@@ -79,16 +79,6 @@ const CustomerListView = () => {
     setValue(index);
   };
 
-  const departments = [
-    { value: 'AEX', name: 'Agricultural Extension' },
-    { value: 'AEC', name: 'Agricultural Economics' },
-    { value: 'AST', name: 'Animal Science and Technology' },
-    { value: 'CST', name: 'Crop Science and Technology' },
-    { value: 'FAT', name: 'Fisheries and Aquaticulture Technology' },
-    { value: 'FWT', name: 'Forestry and Widelife Technology' },
-    { value: 'SST', name: 'Soil Science Technology' },
-  ];
-
   return (
     <div className={classes.root}>
       <Page
@@ -105,9 +95,12 @@ const CustomerListView = () => {
             aria-label="full width tabs example"
             style={{ backgrondColor: 'white' }}
           >
-            {departments.map((department, index) => {
-              return <Tab label={department.value} key={department.value} {...a11yProps(index)} />;
-            })}
+            <Tab label="AEX" {...a11yProps(0)} />
+            <Tab label="AST" {...a11yProps(1)} />
+            <Tab label="CST" {...a11yProps(2)} />
+            <Tab label="FAT" {...a11yProps(3)} />
+            <Tab label="FWT" {...a11yProps(4)} />
+            <Tab label="SST" {...a11yProps(5)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -115,17 +108,33 @@ const CustomerListView = () => {
           index={value}
           onChangeIndex={handleChangeIndex}
         >
-          {departments.map((department, index) => {
-            return (
-              <TabPanel key={department.value} value={value} index={index} dir={theme.direction}>
-                <Box mt={3}>
-                  <h3 style={{ margin: '1rem 0' }}>{department.name}</h3>
-                  <Toolbar />
-                  <Results customers={customers} />
-                </Box>
-              </TabPanel>
-            );
-          })}
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <Box mt={3}>
+              <h3 style={{ margin: '1rem 0' }}>Agricultural Extension</h3>
+              <Toolbar />
+              <Results customers={customers} />
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <h3 style={{ margin: '1rem 0' }}>Animal Science and Technology</h3>
+            <Results customers={customers} />
+          </TabPanel>
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            <h3 style={{ margin: '1rem 0' }}>Crop Science and Technology</h3>
+            <Results customers={customers} />
+          </TabPanel>
+          <TabPanel value={value} index={3} dir={theme.direction}>
+            <h3 style={{ margin: '1rem 0' }}>Fisheries and Aquaticulture Technology</h3>
+            <Results customers={customers} />
+          </TabPanel>
+          <TabPanel value={value} index={4} dir={theme.direction}>
+            <h3 style={{ margin: '1rem 0' }}>Forestry and Widelife Technology</h3>
+            <Results customers={customers} />
+          </TabPanel>
+          <TabPanel value={value} index={4} dir={theme.direction}>
+            <h3 style={{ margin: '1rem 0' }}>Soil Science Technology</h3>
+            <Results customers={customers} />
+          </TabPanel>
         </SwipeableViews>
       </Page>
     </div>

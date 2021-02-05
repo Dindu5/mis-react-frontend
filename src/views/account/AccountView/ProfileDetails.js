@@ -182,7 +182,7 @@ const ProfileDetails = ({ className, ...rest }) => {
             color="primary"
             variant="contained"
           >
-            Save details
+            Update details
           </Button>
         </Box>
       </Card>
