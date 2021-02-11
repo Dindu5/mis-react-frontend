@@ -14,10 +14,10 @@ import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
 
-const routes = [
+const routes = (authenticated) => [
   {
     path: 'portal',
-    element: <DashboardLayout />,
+    element: authenticated ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { path: 'account', element: <AccountView /> },
       { path: 'saat', element: <CustomerListView /> },

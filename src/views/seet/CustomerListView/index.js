@@ -80,11 +80,16 @@ const SobsListView = () => {
   };
 
   const departments = [
-    { value: 'AGE', name: 'Agricultural Engineering' },
+    { value: 'ABE', name: 'Agricultural and Bioresources Engineering' },
     { value: 'CHE', name: 'Chemical Engineering' },
     { value: 'EEE', name: 'Electrical and Electronics Engineering' },
     { value: 'CIE', name: 'Civil Engineering' },
     { value: 'FST', name: 'Food Science Technology' },
+    { value: 'MME', name: 'Material and Metallurgical Engineering' },
+    { value: 'MEE', name: 'Mechanical Engineering' },
+    { value: 'MCE', name: 'Mechatronic Engineering' },
+    { value: 'PET', name: 'Petroleum Engineering' },
+    { value: 'PTE', name: 'Polymer and Textile Engineering' },
   ];
 
   return (
