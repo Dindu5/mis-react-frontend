@@ -6,7 +6,7 @@ export { UserContext };
 
 function UserContextProvider(props) {
   const { children } = props;
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
 
   return (

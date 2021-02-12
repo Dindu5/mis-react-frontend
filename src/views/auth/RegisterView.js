@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormHelperText,
   Link,
   TextField,
   Typography,
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
+import baseUrl from 'src/api';
+import { UserContext } from 'src/context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, seterror] = useState('');
+  const { setAuthenticated, setUser } = useContext(UserContext);
 
   return (
     <Page
@@ -43,22 +48,42 @@ const RegisterView = () => {
           <Formik
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
+              username: '',
               password: '',
-              policy: false
             }}
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
+                username: Yup.string().max(255).required('First name is required'),
                 password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values) => {
+              setLoading(true);
+              seterror(false);
+              delete axios.defaults.headers.common.Authorization;
+              axios
+                .post(`${baseUrl}/auth/local/register`, values)
+                .then((res) => {
+                  const Atoken = `Bearer ${res.data.jwt}`;
+                  console.log(res);
+                  localStorage.setItem('Atoken', Atoken);
+                  axios.defaults.headers.common.Authorization = Atoken;
+                  setAuthenticated(true);
+                  setUser(res.data.user);
+                  navigate('/portal/dashboard', { replace: true });
+                })
+                .catch((err) => {
+                  if (err.request) {
+                    console.log(err);
+                    console.log(err.response.data.message[0].messages[0].message);
+                    seterror(err.response.data.message[0].messages[0].message);
+                  } else {
+                    console.log(err.response.data.message[0].messages[0].message);
+                    seterror(err.response.data.message[0].messages[0].message);
+                  }
+                });
+              setLoading(false);
             }}
           >
             {({
@@ -66,7 +91,6 @@ const RegisterView = () => {
               handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
               touched,
               values
             }) => (
@@ -87,18 +111,18 @@ const RegisterView = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
+                  error={Boolean(touched.username && errors.username)}
                   fullWidth
-                  helperText={touched.firstName && errors.firstName}
+                  helperText={touched.username && errors.username}
                   label="First name"
                   margin="normal"
-                  name="firstName"
+                  name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
+                  value={values.username}
                   variant="outlined"
                 />
-                <TextField
+                {/* <TextField
                   error={Boolean(touched.lastName && errors.lastName)}
                   fullWidth
                   helperText={touched.lastName && errors.lastName}
@@ -109,7 +133,7 @@ const RegisterView = () => {
                   onChange={handleChange}
                   value={values.lastName}
                   variant="outlined"
-                />
+                /> */}
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -139,45 +163,25 @@ const RegisterView = () => {
                 <Box
                   alignItems="center"
                   display="flex"
-                  ml={-1}
                 >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the
-                    {' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
+                  { error ? (
+                    <Typography color="error" variant="body1">
+                      {error}
+                    </Typography>
+                  )
+                    : '' }
                 </Box>
-                {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>
-                    {errors.policy}
-                  </FormHelperText>
-                )}
                 <Box my={2}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    disabled={loading}
                     fullWidth
                     size="large"
                     type="submit"
                     variant="contained"
+                    onClick={handleSubmit}
                   >
-                    Sign up now
+                    { loading ? <CircularProgress /> : 'Sign up now'}
                   </Button>
                 </Box>
                 <Typography

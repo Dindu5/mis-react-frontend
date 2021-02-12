@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import axios from 'axios';
+import baseUrl from 'src/api';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { UserContext } from 'src/context/UserContext';
 import {
   Box,
   Button,
@@ -25,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, seterror] = useState('');
+  const { setAuthenticated, setUser } = useContext(UserContext);
 
   return (
     <Page className={classes.root} title="Login">
@@ -37,11 +44,11 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: '',
+              identifier: '',
               password: ''
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string()
+              identifier: Yup.string()
                 .email('Must be a valid email')
                 .max(255)
                 .required('Email is required'),
@@ -49,8 +56,28 @@ const LoginView = () => {
                 .max(255)
                 .required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/portal/dashboard', { replace: true });
+            onSubmit={(values) => {
+              setLoading(true);
+              seterror('');
+              // const token = localStorage.getItem('Atoken');
+              // axios.defaults.headers.common.Authorization = token;
+              // console.log(token);
+              delete axios.defaults.headers.common.Authorization;
+              axios
+                .post(`${baseUrl}/auth/local`, values)
+                .then((res) => {
+                  const Atoken = `Bearer ${res.data.jwt}`;
+                  localStorage.setItem('Atoken', Atoken);
+                  axios.defaults.headers.common.Authorization = Atoken;
+                  setAuthenticated(true);
+                  setUser(res.data.user);
+                  navigate('/portal/dashboard', { replace: true });
+                })
+                .catch((err) => {
+                  console.log(err.response.data.message[0].messages[0].message);
+                  setLoading(false);
+                  seterror(err.response.data.message[0].messages[0].message);
+                });
             }}
           >
             {({
@@ -58,7 +85,6 @@ const LoginView = () => {
               handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
               touched,
               values
             }) => (
@@ -82,11 +108,11 @@ const LoginView = () => {
                   helperText={touched.email && errors.email}
                   label="Email Address"
                   margin="normal"
-                  name="email"
+                  name="identifier"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="email"
-                  value={values.email}
+                  value={values.identifier}
                   variant="outlined"
                 />
                 <TextField
@@ -102,16 +128,22 @@ const LoginView = () => {
                   value={values.password}
                   variant="outlined"
                 />
+                { error ? (
+                  <Typography color="error" variant="body1">
+                    { error }
+                  </Typography>
+                )
+                  : '' }
                 <Box my={2}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
                     fullWidth
                     size="large"
                     type="submit"
                     variant="contained"
+                    onClick={handleSubmit}
                   >
-                    Sign in now
+                    { loading ? <CircularProgress /> : 'Sign in now'}
                   </Button>
                 </Box>
                 <Typography color="textSecondary" variant="body1">

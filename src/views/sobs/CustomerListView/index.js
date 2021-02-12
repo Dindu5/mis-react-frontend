@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   makeStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import baseUrl from 'src/api';
 import SwipeableViews from 'react-swipeable-views';
+import axios from 'axios';
 import { useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -13,7 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import Page from 'src/components/Page';
 import Results from '../../../components/Results';
 import Toolbar from '../../../components/Toolbar';
-import data from './data';
 
 function TabPanel(props) {
   const {
@@ -67,12 +68,32 @@ const useStyles = makeStyles((theme) => ({
 
 const SobsListView = () => {
   const classes = useStyles();
-  const [customers] = useState(data);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [students, setStudents] = useState([]);
+
+  const fetchDepartment = (id) => {
+    const token = localStorage.getItem('Atoken');
+    axios.defaults.headers.common.Authorization = token;
+    axios
+      .get(`${baseUrl}/departments/${id}`)
+      .then((res) => {
+        setStudents(res.data.students);
+      })
+      .catch((err) => {
+        if (err.request) {
+          console.log(err);
+          console.log(err.response.data.message[0].messages[0].message);
+        } else {
+          console.log(err.response.data.message[0].messages[0].message);
+        }
+      });
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    const id = newValue + 10;
+    fetchDepartment(id);
   };
 
   const handleChangeIndex = (index) => {
@@ -80,11 +101,15 @@ const SobsListView = () => {
   };
 
   const departments = [
-    { value: 'BCH', name: 'Biochemisty' },
-    { value: 'BIO', name: 'Biology' },
-    { value: 'BTC', name: 'Biotechnology' },
-    { value: 'MCB', name: 'Micro Biology' },
+    { value: 'BCH', name: 'Biochemisty', id: 10 },
+    { value: 'BIO', name: 'Biology', id: 11 },
+    { value: 'BTC', name: 'Biotechnology', id: 12 },
+    { value: 'MCB', name: 'Micro Biology', id: 13 },
   ];
+
+  useEffect(() => {
+    fetchDepartment(departments[0].id);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -118,7 +143,7 @@ const SobsListView = () => {
                 <Box mt={3}>
                   <h3 style={{ margin: '1rem 0' }}>{department.name}</h3>
                   <Toolbar />
-                  <Results customers={customers} />
+                  <Results students={students} />
                 </Box>
               </TabPanel>
             );

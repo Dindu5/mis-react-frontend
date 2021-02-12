@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TasksProgress = ({ className, ...rest }) => {
+const TasksProgress = ({ className, total, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -45,13 +45,13 @@ const TasksProgress = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              Verified Students
+              Registered Students
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              15.5%
+              {total}
             </Typography>
           </Grid>
           <Grid item>
@@ -62,7 +62,7 @@ const TasksProgress = ({ className, ...rest }) => {
         </Grid>
         <Box mt={3}>
           <LinearProgress
-            value={15.5}
+            value={total}
             variant="determinate"
           />
         </Box>

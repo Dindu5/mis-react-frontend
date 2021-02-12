@@ -7,16 +7,19 @@ import 'src/mixins/chartjs';
 import theme from 'src/theme';
 import routes from 'src/routes';
 import { UserContext } from './context/UserContext';
+import DataContextProvider from './context/DataContext';
 
 const App = () => {
   const { authenticated } = useContext(UserContext);
   const routing = useRoutes(routes(authenticated));
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      {routing}
-    </ThemeProvider>
+    <DataContextProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        {routing}
+      </ThemeProvider>
+    </DataContextProvider>
   );
 };
 

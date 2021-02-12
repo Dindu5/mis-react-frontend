@@ -3,6 +3,8 @@ import {
   Box,
   makeStyles
 } from '@material-ui/core';
+import axios from 'axios';
+import baseUrl from 'src/api';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/core/styles';
@@ -13,7 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import Page from 'src/components/Page';
 import Results from '../../../components/Results';
 import Toolbar from '../../../components/Toolbar';
-import data from './data';
 
 function TabPanel(props) {
   const {
@@ -67,12 +68,33 @@ const useStyles = makeStyles((theme) => ({
 
 const SobsListView = () => {
   const classes = useStyles();
-  const [customers] = useState(data);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [students, setStudents] = useState([]);
+
+  const fetchDepartment = (id) => {
+    const token = localStorage.getItem('Atoken');
+    axios.defaults.headers.common.Authorization = token;
+    console.log('started');
+    axios
+      .get(`${baseUrl}/departments/${id}`)
+      .then((res) => {
+        setStudents(res.data.students);
+      })
+      .catch((err) => {
+        if (err.request) {
+          console.log(err);
+          console.log(err.response.data.message[0].messages[0].message);
+        } else {
+          console.log(err.response.data.message[0].messages[0].message);
+        }
+      });
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    const id = newValue + 14;
+    fetchDepartment(id);
   };
 
   const handleChangeIndex = (index) => {
@@ -80,16 +102,16 @@ const SobsListView = () => {
   };
 
   const departments = [
-    { value: 'ABE', name: 'Agricultural and Bioresources Engineering' },
-    { value: 'CHE', name: 'Chemical Engineering' },
-    { value: 'EEE', name: 'Electrical and Electronics Engineering' },
-    { value: 'CIE', name: 'Civil Engineering' },
-    { value: 'FST', name: 'Food Science Technology' },
-    { value: 'MME', name: 'Material and Metallurgical Engineering' },
-    { value: 'MEE', name: 'Mechanical Engineering' },
-    { value: 'MCE', name: 'Mechatronic Engineering' },
-    { value: 'PET', name: 'Petroleum Engineering' },
-    { value: 'PTE', name: 'Polymer and Textile Engineering' },
+    { value: 'ABE', name: 'Agricultural and Bioresources Engineering', id: 14 },
+    { value: 'CHE', name: 'Chemical Engineering', id: 15 },
+    { value: 'EEE', name: 'Electrical and Electronics Engineering', id: 16 },
+    { value: 'FST', name: 'Food Science Technology', id: 17 },
+    { value: 'CIE', name: 'Civil Engineering', id: 18 },
+    { value: 'MME', name: 'Material and Metallurgical Engineering', id: 19 },
+    { value: 'MEE', name: 'Mechanical Engineering', id: 20 },
+    { value: 'MCE', name: 'Mechatronic Engineering', id: 21 },
+    { value: 'PET', name: 'Petroleum Engineering', id: 22 },
+    { value: 'PTE', name: 'Polymer and Textile Engineering', id: 23 },
   ];
 
   return (
@@ -124,7 +146,7 @@ const SobsListView = () => {
                 <Box mt={3}>
                   <h3 style={{ margin: '1rem 0' }}>{department.name}</h3>
                   <Toolbar />
-                  <Results customers={customers} />
+                  <Results students={students} />
                 </Box>
               </TabPanel>
             );

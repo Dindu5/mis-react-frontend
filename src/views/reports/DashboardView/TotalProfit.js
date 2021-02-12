@@ -23,8 +23,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TotalProfit = ({ className, ...rest }) => {
+const TotalProfit = ({ className, total, ...rest }) => {
   const classes = useStyles();
+  const price = 2000 * total;
 
   return (
     <Card
@@ -49,7 +50,8 @@ const TotalProfit = ({ className, ...rest }) => {
               color="textPrimary"
               variant="h3"
             >
-              ₦23,200
+              ₦
+              {price}
             </Typography>
           </Grid>
           <Grid item>

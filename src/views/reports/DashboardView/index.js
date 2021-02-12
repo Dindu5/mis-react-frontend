@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import axios from 'axios';
 import {
   Container,
   Grid,
   makeStyles
 } from '@material-ui/core';
+import baseUrl from 'src/api';
+import { DataContext } from 'src/context/DataContext';
 import Page from 'src/components/Page';
 import Budget from './Budget';
 import LatestOrders from './LatestOrders';
@@ -23,6 +26,23 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
+  const { count, setCount } = useContext(DataContext);
+
+  useEffect(() => {
+    axios
+      .get(`${baseUrl}/students/count`)
+      .then((res) => {
+        console.log(res.data);
+        setCount(res.data);
+      })
+      .catch((err) => {
+        if (err.request) {
+          console.log(err);
+        } else {
+          console.log(err);
+        }
+      });
+  }, []);
 
   return (
     <Page
@@ -50,7 +70,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <TotalCustomers total={count} />
           </Grid>
           <Grid
             item
@@ -59,7 +79,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TasksProgress />
+            <TasksProgress total={count} />
           </Grid>
           <Grid
             item
@@ -68,7 +88,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalProfit />
+            <TotalProfit total={count} />
           </Grid>
           <Grid
             item
