@@ -103,6 +103,15 @@ const Dashboard = () => {
           >
             <TasksProgress total={count} />
           </Grid>
+          <Grid
+            item
+            lg={3}
+            sm={6}
+            xl={3}
+            xs={12}
+          >
+            <TotalProfit total={count} />
+          </Grid>
           {schools.length !== 0 ? schools.map((school) => {
             return (
               <Grid
@@ -117,15 +126,6 @@ const Dashboard = () => {
               </Grid>
             );
           }) : ''}
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TotalProfit total={count} />
-          </Grid>
           <Grid
             item
             lg={12}
