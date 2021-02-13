@@ -15,7 +15,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'name', label: 'Full Name', minWidth: 220 },
+  { id: 'name', label: 'Full Name', minWidth: 250 },
   { id: 'regNo', label: 'Reg No', minWidth: 100 },
   {
     id: 'level',
@@ -77,7 +77,7 @@ const Results = ({ students }) => {
           <TableBody>
             {students.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((student) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={student.reg_no}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={student.id}>
                   <TableCell>
                     <Typography
                       color="textPrimary"

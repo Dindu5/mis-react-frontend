@@ -75,7 +75,6 @@ const CustomerListView = () => {
   const fetchDepartment = (id) => {
     const token = localStorage.getItem('Atoken');
     axios.defaults.headers.common.Authorization = token;
-    console.log('started');
     axios
       .get(`${baseUrl}/departments/${id}`)
       .then((res) => {
@@ -84,9 +83,9 @@ const CustomerListView = () => {
       .catch((err) => {
         if (err.request) {
           console.log(err);
-          console.log(err.response.data.message[0].messages[0].message);
+          console.log(err.response);
         } else {
-          console.log(err.response.data.message[0].messages[0].message);
+          console.log(err.response);
         }
       });
   };
@@ -116,24 +115,17 @@ const CustomerListView = () => {
         className={classes.table}
         title="School of Agriculture and Agricultural Technology"
       >
-        <AppBar position="static" color="paper">
+        <AppBar position="static" color="white">
           <Tabs
             value={value}
             onChange={handleChange}
             indicatorColor="primary"
             textColor="primary"
             variant="fullWidth"
-            aria-label="full width tabs example"
             style={{ backgrondColor: 'white' }}
           >
             {departments.map((department, index) => {
-              return (
-                <Tab
-                  label={department.value}
-                  key={department.value}
-                  {...a11yProps(index)}
-                />
-              );
+              return <Tab label={department.value} {...a11yProps(index)} key={department.value} />;
             })}
           </Tabs>
         </AppBar>

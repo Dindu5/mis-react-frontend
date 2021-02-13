@@ -120,18 +120,17 @@ const SobsListView = () => {
         className={classes.table}
         title="School of Engineering and Engineering Technology"
       >
-        <AppBar position="static" color="paper">
+        <AppBar position="static" color="white">
           <Tabs
             value={value}
             onChange={handleChange}
             indicatorColor="primary"
             textColor="primary"
             variant="fullWidth"
-            aria-label="full width tabs example"
             style={{ backgrondColor: 'white' }}
           >
             {departments.map((department, index) => {
-              return <Tab label={department.value} key={department.value} {...a11yProps(index)} />;
+              return <Tab label={department.value} {...a11yProps(index)} key={department.value} />;
             })}
           </Tabs>
         </AppBar>

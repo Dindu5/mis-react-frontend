@@ -7,6 +7,9 @@ import CustomerListView from 'src/views/customer/CustomerListView';
 import SobsListView from 'src/views/sobs/CustomerListView';
 import SoesListView from 'src/views/soes/CustomerListView';
 import SeetListView from 'src/views/seet/CustomerListView';
+import SohtListView from 'src/views/soht/CustomerListView';
+import ScitListView from 'src/views/scit/CustomerListView';
+import SmatListView from 'src/views/smat/CustomerListView';
 import DashboardView from 'src/views/reports/DashboardView';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
@@ -24,6 +27,9 @@ const routes = (authenticated) => [
       { path: 'sobs', element: <SobsListView /> },
       { path: 'soes', element: <SoesListView /> },
       { path: 'seet', element: <SeetListView /> },
+      { path: 'soht', element: <SohtListView /> },
+      { path: 'scit', element: <ScitListView /> },
+      { path: 'smat', element: <SmatListView /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'products', element: <ProductListView /> },
       { path: 'settings', element: <SettingsView /> },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
   Box,
@@ -19,6 +19,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import axios from 'axios';
+import { UserContext } from 'src/context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductList = () => {
   const classes = useStyles();
+  const { user } = useContext(UserContext);
   const [values, setValues] = useState({
     firstname: '',
     lastname: '',
@@ -56,7 +58,6 @@ const ProductList = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     const id = uuid();
     const modifiedValues = {
       firstname: values.firstname,
@@ -65,12 +66,17 @@ const ProductList = () => {
       email: values.email,
       reg_no: values.regno,
       level: values.level,
+      users_permissions_user: {
+        id: user.id
+      },
       department: {
         id: values.department
       },
+      faculty: {
+        id: values.faculty
+      },
       manual_id: id.slice(0, 8),
     };
-    console.log(modifiedValues);
     const token = localStorage.getItem('Atoken');
     axios.defaults.headers.common.Authorization = token;
     axios
@@ -102,37 +108,44 @@ const ProductList = () => {
     {
       school: 'SAAT',
       name: 'School of Agriculture and Agricultural Extension',
+      id: 2,
     },
     {
       school: 'SOBS',
       name: 'School of Biological Sciences',
+      id: 3,
     },
     {
       school: 'SEET',
       name: 'School of Engineering and Engineering Technology',
+      id: 4,
     },
     {
       school: 'SOES',
       name: 'School of Environmental Sciences',
+      id: 5,
     },
     {
       school: 'SMAT',
       name: 'School of Management Technology',
+      id: 6,
     },
     {
       school: 'SOHT',
       name: 'School of Health Technology',
+      id: 7,
     },
     {
       school: 'SCIT',
       name: 'School of Computing and Information Technology',
+      id: 1,
     },
   ];
 
   let departments = [];
 
   switch (values.faculty) {
-    case 'SAAT':
+    case 2:
       departments = [
         { value: 'AEX', name: 'Agricultural Extension', id: 3 },
         { value: 'AST', name: 'Animal Science and Technology', id: 4 },
@@ -143,7 +156,7 @@ const ProductList = () => {
         { value: 'SST', name: 'Soil Science Technology', id: 9 },
       ];
       break;
-    case 'SOBS':
+    case 3:
       departments = [
         { value: 'BCH', name: 'Biochemisty', id: 10 },
         { value: 'BIO', name: 'Biology', id: 11 },
@@ -151,7 +164,7 @@ const ProductList = () => {
         { value: 'MCB', name: 'Micro Biology', id: 13 },
       ];
       break;
-    case 'SEET':
+    case 4:
       departments = [
         { value: 'ABE', name: 'Agricultural and Bioresources Engineering', id: 14 },
         { value: 'CHE', name: 'Chemical Engineering', id: 15 },
@@ -166,55 +179,44 @@ const ProductList = () => {
       ];
       break;
 
-    case 'SOES':
+    case 5:
       departments = [
-        { value: 'ABE', name: 'Agricultural and Bioresources Engineering', id: 14 },
-        { value: 'CHE', name: 'Chemical Engineering', id: 15 },
-        { value: 'EEE', name: 'Electrical and Electronics Engineering', id: 16 },
-        { value: 'CIE', name: 'Civil Engineering', id: 17 },
-        { value: 'FST', name: 'Food Science Technology', id: 18 },
-        { value: 'MME', name: 'Material and Metallurgical Engineering', id: 19 },
-        { value: 'MEE', name: 'Mechanical Engineering', id: 20 },
-        { value: 'MCE', name: 'Mechatronic Engineering', id: 21 },
-        { value: 'PET', name: 'Petroleum Engineering', id: 22 },
-        { value: 'PTE', name: 'Polymer and Textile Engineering', id: 23 },
+        { value: 'ARC', name: 'Architecture', id: 24 },
+        { value: 'BUT', name: 'Building Technology', id: 25 },
+        { value: 'EVT', name: 'Environmental Technology', id: 26 },
+        { value: 'QST', name: 'Quantity Surveying', id: 27 },
+        { value: 'SGI', name: 'Surveying and Geoinformatics', id: 28 },
+        { value: 'URP', name: 'Urban and Regional Planning', id: 29 }
       ];
       break;
 
-    case 'SMAT':
+    case 6:
       departments = [
-        { value: 'ABE', name: 'Agricultural and Bioresources Engineering', id: 14 },
-        { value: 'CHE', name: 'Chemical Engineering', id: 15 },
-        { value: 'EEE', name: 'Electrical and Electronics Engineering', id: 16 },
-        { value: 'CIE', name: 'Civil Engineering', id: 17 },
-        { value: 'FST', name: 'Food Science Technology', id: 18 },
-        { value: 'MME', name: 'Material and Metallurgical Engineering', id: 19 },
-        { value: 'MEE', name: 'Mechanical Engineering', id: 20 },
-        { value: 'MCE', name: 'Mechatronic Engineering', id: 21 },
-        { value: 'PET', name: 'Petroleum Engineering', id: 22 },
-        { value: 'PTE', name: 'Polymer and Textile Engineering', id: 23 },
+        { value: 'FMT', name: 'Financial Management Technology', id: 30 },
+        { value: 'MMT', name: 'Maritime Management Technology', id: 31 },
+        { value: 'PMT', name: 'Project Management Technology', id: 32 },
+        { value: 'TMT', name: 'Transport Management Technolgy', id: 33 },
+        { value: 'MGT', name: 'Management Technology', id: 34 }
       ];
       break;
 
-    case 'SOHT':
+    case 7:
       departments = [
-        { value: 'ABE', name: 'Agricultural and Bioresources Engineering', id: 14 },
-        { value: 'CHE', name: 'Chemical Engineering', id: 15 },
-        { value: 'EEE', name: 'Electrical and Electronics Engineering', id: 16 },
-        { value: 'CIE', name: 'Civil Engineering', id: 17 },
-        { value: 'FST', name: 'Food Science Technology', id: 18 },
-        { value: 'MME', name: 'Material and Metallurgical Engineering', id: 19 },
-        { value: 'MEE', name: 'Mechanical Engineering', id: 20 },
-        { value: 'MCE', name: 'Mechatronic Engineering', id: 21 },
-        { value: 'PET', name: 'Petroleum Engineering', id: 22 },
-        { value: 'PTE', name: 'Polymer and Textile Engineering', id: 23 },
+        { value: 'BMT', name: 'Biomedical Technology', id: 35 },
+        { value: 'DNT', name: 'Dental Technology', id: 36 },
+        { value: 'EHS', name: 'Environmental Health Science', id: 37 },
+        { value: 'OPT', name: 'Optomery', id: 38 },
+        { value: 'POT', name: 'Prostetics and Orthotics', id: 39 },
+        { value: 'PHT', name: 'Public Health Technology', id: 40 }
       ];
       break;
 
-    case 'SCIT':
+    case 1:
       departments = [
-        { value: 'CSC', name: 'Agricultural and Bioresources Engineering', id: 1 },
-        { value: 'CHE', name: 'Chemical Engineering', id: 15 },
+        { value: 'CSC', name: 'Computer Science', id: 41 },
+        { value: 'IMT', name: 'Information Technology', id: 42 },
+        { value: 'CBS', name: 'Cyber Security', id: 43 },
+        { value: 'SWE', name: 'Software Engineering', id: 44 },
       ];
       break;
 
@@ -315,8 +317,8 @@ const ProductList = () => {
                         {futoData.map((school) => {
                           return (
                             <MenuItem
-                              key={school.name}
-                              value={school.school}
+                              key={school.id}
+                              value={school.id}
                             >
                               {school.name}
                             </MenuItem>

@@ -3,6 +3,8 @@ import {
   Box,
   makeStyles
 } from '@material-ui/core';
+import axios from 'axios';
+import baseUrl from 'src/api';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/core/styles';
@@ -13,7 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import Page from 'src/components/Page';
 import Results from '../../../components/Results';
 import Toolbar from '../../../components/Toolbar';
-import data from './data';
 
 function TabPanel(props) {
   const {
@@ -67,12 +68,33 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomerListView = () => {
   const classes = useStyles();
-  const [customers] = useState(data);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [students, setStudents] = useState([]);
+
+  const fetchDepartment = (id) => {
+    const token = localStorage.getItem('Atoken');
+    axios.defaults.headers.common.Authorization = token;
+    console.log('started');
+    axios
+      .get(`${baseUrl}/departments/${id}`)
+      .then((res) => {
+        setStudents(res.data.students);
+      })
+      .catch((err) => {
+        if (err.request) {
+          console.log(err);
+          console.log(err.response.data.message[0].messages[0].message);
+        } else {
+          console.log(err.response.data.message[0].messages[0].message);
+        }
+      });
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    const id = newValue + 24;
+    fetchDepartment(id);
   };
 
   const handleChangeIndex = (index) => {
@@ -80,13 +102,12 @@ const CustomerListView = () => {
   };
 
   const departments = [
-    { value: 'AEX', name: 'Agricultural Extension' },
-    { value: 'AEC', name: 'Agricultural Economics' },
-    { value: 'AST', name: 'Animal Science and Technology' },
-    { value: 'CST', name: 'Crop Science and Technology' },
-    { value: 'FAT', name: 'Fisheries and Aquaticulture Technology' },
-    { value: 'FWT', name: 'Forestry and Widelife Technology' },
-    { value: 'SST', name: 'Soil Science Technology' },
+    { value: 'ARC', name: 'Architecture', id: 24 },
+    { value: 'BUT', name: 'Building Technology', id: 25 },
+    { value: 'EVT', name: 'Environmental Technology', id: 26 },
+    { value: 'QST', name: 'Quantity Surveying', id: 27 },
+    { value: 'SGI', name: 'Surveying and Geoinformatics', id: 28 },
+    { value: 'URP', name: 'Urban and Regional Planning', id: 29 }
   ];
 
   return (
@@ -121,7 +142,7 @@ const CustomerListView = () => {
                 <Box mt={3}>
                   <h3 style={{ margin: '1rem 0' }}>{department.name}</h3>
                   <Toolbar />
-                  <Results customers={customers} />
+                  <Results students={students} />
                 </Box>
               </TabPanel>
             );

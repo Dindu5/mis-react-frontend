@@ -1,10 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   Grid,
@@ -12,8 +10,7 @@ import {
   colors,
   makeStyles
 } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
+import StorageIcon from '@material-ui/icons/Storage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,15 +30,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Budget = ({ className, todayCount, ...rest }) => {
+const Faculty = ({ className, school, ...rest }) => {
   const classes = useStyles();
-  const current = new Date();
-  const timestamp = current.getTime();
-  const num = todayCount.filter((student) => {
-    const studentDate = moment(student.created_at).format('DD/MM/YYYY');
-    const currentDate = moment(timestamp).format('DD/MM/YYYY');
-    return studentDate === currentDate;
-  });
 
   return (
     <Card
@@ -60,48 +50,28 @@ const Budget = ({ className, todayCount, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              Today Sales
+              {school.value}
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              ₦
-              { num.length * 2000 }
+              {school.students.length}
             </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <MoneyIcon />
+              <StorageIcon />
             </Avatar>
           </Grid>
         </Grid>
-        <Box
-          mt={2}
-          display="flex"
-          alignItems="center"
-        >
-          <ArrowDownwardIcon className={classes.differenceIcon} />
-          <Typography
-            className={classes.differenceValue}
-            variant="body2"
-          >
-            12%
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            Since yesterday
-          </Typography>
-        </Box>
       </CardContent>
     </Card>
   );
 };
 
-Budget.propTypes = {
+Faculty.propTypes = {
   className: PropTypes.string
 };
 
-export default Budget;
+export default Faculty;
