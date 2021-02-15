@@ -6,6 +6,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -43,7 +44,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Results = ({ students }) => {
+const Results = ({ students, loading }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -75,41 +76,56 @@ const Results = ({ students }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {students.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((student) => {
-              return (
-                <TableRow
-                  hover
-                  role="checkbox"
-                  tabIndex={-1}
-                  key={student.id}
-                  className="table-row-student"
-                  onClick={() => { navigate(`/portal/student/${student.id}`, { replace: true }); }}
-                >
-                  <TableCell>
-                    <Typography
-                      color="textPrimary"
-                      variant="body1"
+          {loading ? (
+            <TableBody>
+              <TableRow>
+                <TableCell />
+                <TableCell />
+                <TableCell>
+                  <CircularProgress />
+                </TableCell>
+                <TableCell />
+                <TableCell />
+              </TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {students
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((student) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={student.id}
+                      className="table-row-student"
+                      onClick={() => { navigate(`/portal/student/${student.id}`, { replace: true }); }}
                     >
-                      {`${student.firstname} ${student.lastname}`}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    {student.reg_no}
-                  </TableCell>
-                  <TableCell align="right">
-                    {student.level}
-                  </TableCell>
-                  <TableCell align="right">
-                    {student.manual_id}
-                  </TableCell>
-                  <TableCell align="right">
-                    {moment(student.created_at).format('DD/MM/YYYY')}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
+                      <TableCell>
+                        <Typography
+                          color="textPrimary"
+                          variant="body1"
+                        >
+                          {`${student.firstname} ${student.lastname}`}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        {student.reg_no}
+                      </TableCell>
+                      <TableCell align="right">
+                        {student.level}
+                      </TableCell>
+                      <TableCell align="right">
+                        {student.manual_id}
+                      </TableCell>
+                      <TableCell align="right">
+                        {moment(student.created_at).format('DD/MM/YYYY')}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
       <TablePagination

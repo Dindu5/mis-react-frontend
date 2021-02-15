@@ -71,15 +71,23 @@ const LoginView = () => {
                   setAuthenticated(true);
                   setUser(res.data.user);
                   setTimeout(() => {
-                    alert.success(`Login sucessful, Welcome ${res.data.user.username}`);
+                    alert.success(
+                      `Login sucessful, Welcome ${res.data.user.username}`
+                    );
                   }, 500);
                   navigate('/portal/dashboard', { replace: true });
                 })
                 .catch((err) => {
-                  console.log(err.response);
-                  setLoading(false);
-                  alert.error('Opps something went wrong');
-                  seterror(err.response);
+                  if (err.response) {
+                    console.log(err.response);
+                    setLoading(false);
+                    alert.error('Opps something went wrong');
+                    seterror(err.response.data.message[0].messages[0].message);
+                  } else {
+                    console.log(err.request);
+                    setLoading(false);
+                    alert.error('Opps something went wrong, check your network');
+                  }
                 });
             }}
           >
@@ -131,12 +139,13 @@ const LoginView = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                { error ? (
+                {error ? (
                   <Typography color="error" variant="body1">
-                    { error }
+                    {error}
                   </Typography>
-                )
-                  : '' }
+                ) : (
+                  ''
+                )}
                 <Box my={2}>
                   <Button
                     color="primary"
@@ -146,7 +155,7 @@ const LoginView = () => {
                     variant="contained"
                     onClick={handleSubmit}
                   >
-                    { loading ? <CircularProgress /> : 'Sign in now'}
+                    {loading ? <CircularProgress color="secondary" /> : 'Sign in now'}
                   </Button>
                 </Box>
                 <Typography color="textSecondary" variant="body1">

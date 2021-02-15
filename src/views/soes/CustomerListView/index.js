@@ -81,6 +81,7 @@ const CustomerListView = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [students, setStudents] = useState([]);
+  const [loading, setloading] = useState(false);
   const [foundStudents, setfoundStudents] = useState([]);
 
   const search = (val) => {
@@ -92,6 +93,7 @@ const CustomerListView = () => {
   };
 
   const fetchDepartment = (id) => {
+    setloading(true);
     const token = localStorage.getItem('Atoken');
     axios.defaults.headers.common.Authorization = token;
     axios
@@ -99,14 +101,16 @@ const CustomerListView = () => {
       .then((res) => {
         setStudents(res.data.students);
         setfoundStudents(res.data.students);
+        setloading(false);
       })
       .catch((err) => {
         if (err.request) {
           console.log(err);
-          console.log(err.response);
+          console.log(err.response.data);
         } else {
-          console.log(err.response);
+          console.log(err.response.data);
         }
+        setloading(false);
       });
   };
 
@@ -194,7 +198,7 @@ const CustomerListView = () => {
                       </Card>
                     </Box>
                   </div>
-                  <Results students={foundStudents} />
+                  <Results students={foundStudents} loading={loading} />
                 </Box>
               </TabPanel>
             );

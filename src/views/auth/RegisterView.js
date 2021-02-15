@@ -77,13 +77,11 @@ const RegisterView = () => {
                   navigate('/portal/dashboard', { replace: true });
                 })
                 .catch((err) => {
-                  if (err.request) {
-                    console.log(err);
+                  if (err.response) {
                     console.log(err.response);
                     seterror(err.response.data.message[0].messages[0].message);
                   } else {
-                    console.log(err.response);
-                    seterror(err.response.data.message[0].messages[0].message);
+                    console.log(err.request);
                   }
                   alert.error('Opps something went wrong, Please try again!!');
                 });
@@ -185,7 +183,7 @@ const RegisterView = () => {
                     variant="contained"
                     onClick={handleSubmit}
                   >
-                    { loading ? <CircularProgress /> : 'Sign up now'}
+                    { loading ? <CircularProgress color="secondary" /> : 'Sign up now'}
                   </Button>
                 </Box>
                 <Typography
@@ -199,7 +197,7 @@ const RegisterView = () => {
                     to="/login"
                     variant="h6"
                   >
-                    { loading ? <CircularProgress /> : 'Sign up'}
+                    Sign up
                   </Link>
                 </Typography>
               </form>

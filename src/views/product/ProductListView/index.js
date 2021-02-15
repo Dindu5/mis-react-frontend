@@ -15,6 +15,7 @@ import {
 import baseUrl from 'src/api';
 import { useAlert } from 'react-alert';
 import Select from '@material-ui/core/Select';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Page from 'src/components/Page';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductList = () => {
   const classes = useStyles();
   const { user } = useContext(UserContext);
+  const [loading, setloading] = useState(false);
   const alert = useAlert();
   const [values, setValues] = useState({
     firstname: '',
@@ -59,6 +61,7 @@ const ProductList = () => {
     });
   };
   const handleSubmit = (e) => {
+    setloading(true);
     e.preventDefault();
     const id = uuid();
     const modifiedValues = {
@@ -85,6 +88,7 @@ const ProductList = () => {
       .post(`${baseUrl}/students`, modifiedValues)
       .then((res) => {
         console.log(res);
+        setloading(false);
         alert.success('New Student successfully added');
         setValues({
           firstname: '',
@@ -104,6 +108,7 @@ const ProductList = () => {
         } else {
           console.log(err.response.data.status);
         }
+        setloading(false);
         alert.success('Opps, Something went wrong, please try again');
       });
   };
@@ -248,6 +253,7 @@ const ProductList = () => {
                       name="firstname"
                       onChange={handleChange}
                       type="text"
+                      required
                       value={values.firstname}
                       variant="outlined"
                     />
@@ -256,6 +262,7 @@ const ProductList = () => {
                       label="Last Name"
                       margin="normal"
                       name="lastname"
+                      required
                       onChange={handleChange}
                       type="text"
                       value={values.lastname}
@@ -277,6 +284,7 @@ const ProductList = () => {
                       margin="normal"
                       name="regno"
                       onChange={handleChange}
+                      required
                       type="number"
                       value={values.regno}
                       variant="outlined"
@@ -287,6 +295,7 @@ const ProductList = () => {
                       margin="normal"
                       name="email"
                       onChange={handleChange}
+                      required
                       type="email"
                       value={values.email}
                       variant="outlined"
@@ -298,6 +307,7 @@ const ProductList = () => {
                         labelId="level"
                         value={values.level}
                         onChange={handleChange}
+                        required
                         label="Level"
                         name="level"
                       >
@@ -315,6 +325,7 @@ const ProductList = () => {
                         labelId="level"
                         value={values.faculty}
                         onChange={handleChange}
+                        required
                         label="School"
                         name="faculty"
                       >
@@ -336,6 +347,7 @@ const ProductList = () => {
                         fullWidth
                         labelId="le"
                         value={values.department}
+                        required
                         defaultValue={values.department ? values.department : ''}
                         onChange={handleChange}
                         label="Department"
@@ -357,7 +369,7 @@ const ProductList = () => {
                   <Divider />
                   <Box display="flex" justifyContent="flex-end" p={2}>
                     <Button color="primary" variant="contained" onClick={handleSubmit}>
-                      Register
+                      { loading ? <CircularProgress color="secondary" /> : 'Register'}
                     </Button>
                   </Box>
                 </Card>

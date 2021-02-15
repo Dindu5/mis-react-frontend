@@ -8,6 +8,7 @@ import theme from 'src/theme';
 import routes from 'src/routes';
 import { UserContext } from './context/UserContext';
 import DataContextProvider from './context/DataContext';
+import './styles.css';
 
 const App = () => {
   const { authenticated } = useContext(UserContext);

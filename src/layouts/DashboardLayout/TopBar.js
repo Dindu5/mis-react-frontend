@@ -46,7 +46,7 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/" style={{ display: 'flex', alignItems: 'center' }}>
+        <RouterLink to="/portal/dashboard" style={{ display: 'flex', alignItems: 'center' }}>
           <Logo />
           <h4 style={{ marginLeft: '8px', color: 'white', fontFamily: 'roboto' }}>CSC-201 Portal</h4>
         </RouterLink>

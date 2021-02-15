@@ -69,7 +69,7 @@ const items = [
   {
     href: '/portal/scit',
     icon: DatabaseIcon,
-    title: 'SCIT'
+    title: 'SICT'
   },
   // {
   //   href: '/portal/account',
