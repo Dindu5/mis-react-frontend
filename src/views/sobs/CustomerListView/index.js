@@ -195,7 +195,7 @@ const SobsListView = () => {
                       </Card>
                     </Box>
                   </div>
-                  <Results students={foundStudents} laoding={loading} />
+                  <Results students={foundStudents} loading={loading} />
                 </Box>
               </TabPanel>
             );
