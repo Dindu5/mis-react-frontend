@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const Account = () => {
   const classes = useStyles();
   const [student, setStudent] = useState({});
+  const [values, setvalues] = useState({});
   const { slug } = useParams();
   console.log(slug);
 
@@ -34,6 +35,8 @@ const Account = () => {
       .get(`${baseUrl}/students/${id}`)
       .then((res) => {
         setStudent(res.data);
+        setvalues(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         if (err.request) {
@@ -74,7 +77,12 @@ const Account = () => {
             md={8}
             xs={12}
           >
-            <ProfileDetails student={student} refresh={setStudent} />
+            <ProfileDetails
+              student={student}
+              refresh={setStudent}
+              values={values}
+              setValues={setvalues}
+            />
           </Grid>
         </Grid>
       </Container>

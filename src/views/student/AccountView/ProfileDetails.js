@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
@@ -29,6 +29,8 @@ const ProfileDetails = ({
   className,
   student,
   refresh,
+  // values,
+  // setValues,
   ...rest
 }) => {
   const classes = useStyles();
@@ -57,6 +59,19 @@ const ProfileDetails = ({
       [event.target.name]: event.target.value
     });
   };
+
+  useEffect(() => {
+    setValues({
+      lastname: student.lastname,
+      firstname: student.firstname,
+      othernames: student.othernames,
+      email: student.email,
+      reg_no: student.reg_no,
+      level: student.level,
+      faculty: student.faculty ? student.faculty.id : '',
+      department: student.department ? student.department.id : '',
+    });
+  }, [student]);
 
   const futoData = [
     {
@@ -221,7 +236,6 @@ const ProfileDetails = ({
         },
       };
     }
-    console.log(modifiedValues);
     const token = localStorage.getItem('Atoken');
     axios.defaults.headers.common.Authorization = token;
     axios
@@ -236,7 +250,7 @@ const ProfileDetails = ({
           console.log(err.request);
           console.log(err.response);
         } else {
-          console.log(err.response.data.status);
+          console.log(err.response);
         }
         alert.error('Opps, Something went wrong, please try again');
       });
@@ -288,11 +302,11 @@ const ProfileDetails = ({
             >
               <TextField
                 fullWidth
-                label="Last name"
                 name="lastname"
                 onChange={handleChange}
                 required
                 value={values.lastname}
+                helperText="Last Name"
                 variant="outlined"
               />
             </Grid>
@@ -302,7 +316,7 @@ const ProfileDetails = ({
             >
               <TextField
                 fullWidth
-                label="First name"
+                helperText="First Name"
                 name="firstname"
                 onChange={handleChange}
                 value={values.firstname}
@@ -315,7 +329,7 @@ const ProfileDetails = ({
             >
               <TextField
                 fullWidth
-                label="Other Names"
+                helperText="Other Names"
                 name="othernames"
                 onChange={handleChange}
                 value={values.othernames}
@@ -328,7 +342,7 @@ const ProfileDetails = ({
             >
               <TextField
                 fullWidth
-                label="Email Address"
+                helperText="Email Address"
                 name="email"
                 onChange={handleChange}
                 value={values.email}
@@ -342,7 +356,7 @@ const ProfileDetails = ({
             >
               <TextField
                 fullWidth
-                label="Reg NO"
+                helperText="Reg No"
                 name="reg_no"
                 onChange={handleChange}
                 value={values.reg_no}
@@ -358,7 +372,7 @@ const ProfileDetails = ({
                 fullWidth
                 value={values.level}
                 onChange={handleChange}
-                label="Level"
+                helperText="Level"
                 name="level"
                 select
                 SelectProps={{ native: true }}
@@ -379,7 +393,7 @@ const ProfileDetails = ({
                 fullWidth
                 value={values.faculty}
                 onChange={handleChange}
-                label="School"
+                helperText="School"
                 name="faculty"
                 select
                 SelectProps={{ native: true }}
@@ -405,7 +419,7 @@ const ProfileDetails = ({
                 fullWidth
                 value={values.department}
                 onChange={handleChange}
-                label="Department"
+                helperText="Department"
                 name="department"
                 select
                 SelectProps={{ native: true }}

@@ -106,7 +106,7 @@ const ProductList = () => {
           console.log(err.request);
           console.log(err.response);
         } else {
-          console.log(err.response.data.status);
+          console.log(err.response);
         }
         setloading(false);
         alert.success('Opps, Something went wrong, please try again');

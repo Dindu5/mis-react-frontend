@@ -106,9 +106,9 @@ const SobsListView = () => {
       .catch((err) => {
         if (err.request) {
           console.log(err);
-          console.log(err.response.data);
+          console.log(err.response);
         } else {
-          console.log(err.response.data);
+          console.log(err.response);
         }
         setloading(false);
       });
