@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import axios from 'axios';
+import { useAlert } from 'react-alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   Box,
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RegisterView = () => {
   const classes = useStyles();
+  const alert = useAlert();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, seterror] = useState('');
@@ -71,17 +73,19 @@ const RegisterView = () => {
                   axios.defaults.headers.common.Authorization = Atoken;
                   setAuthenticated(true);
                   setUser(res.data.user);
+                  alert.success(`Your registeration was sucessful ${res.data.user.username}, Your are now logged in`);
                   navigate('/portal/dashboard', { replace: true });
                 })
                 .catch((err) => {
                   if (err.request) {
                     console.log(err);
-                    console.log(err.response.data.message[0].messages[0].message);
+                    console.log(err.response);
                     seterror(err.response.data.message[0].messages[0].message);
                   } else {
-                    console.log(err.response.data.message[0].messages[0].message);
+                    console.log(err.response);
                     seterror(err.response.data.message[0].messages[0].message);
                   }
+                  alert.error('Opps something went wrong, Please try again!!');
                 });
               setLoading(false);
             }}
@@ -195,7 +199,7 @@ const RegisterView = () => {
                     to="/login"
                     variant="h6"
                   >
-                    Sign in
+                    { loading ? <CircularProgress /> : 'Sign up'}
                   </Link>
                 </Typography>
               </form>

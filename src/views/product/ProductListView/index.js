@@ -13,6 +13,7 @@ import {
   TextField
 } from '@material-ui/core';
 import baseUrl from 'src/api';
+import { useAlert } from 'react-alert';
 import Select from '@material-ui/core/Select';
 import Page from 'src/components/Page';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductList = () => {
   const classes = useStyles();
   const { user } = useContext(UserContext);
+  const alert = useAlert();
   const [values, setValues] = useState({
     firstname: '',
     lastname: '',
@@ -83,6 +85,7 @@ const ProductList = () => {
       .post(`${baseUrl}/students`, modifiedValues)
       .then((res) => {
         console.log(res);
+        alert.success('New Student successfully added');
         setValues({
           firstname: '',
           lastname: '',
@@ -101,6 +104,7 @@ const ProductList = () => {
         } else {
           console.log(err.response.data.status);
         }
+        alert.success('Opps, Something went wrong, please try again');
       });
   };
 
@@ -327,10 +331,10 @@ const ProductList = () => {
                       </Select>
                     </FormControl>
                     <FormControl fullWidth variant="outlined" className={classes.formControl} margin="normal">
-                      <InputLabel id="level">Department</InputLabel>
+                      <InputLabel id="le">Department</InputLabel>
                       <Select
                         fullWidth
-                        labelId="level"
+                        labelId="le"
                         value={values.department}
                         defaultValue={values.department ? values.department : ''}
                         onChange={handleChange}

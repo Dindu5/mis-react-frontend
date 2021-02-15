@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import axios from 'axios';
+import { useAlert } from 'react-alert';
 import baseUrl from 'src/api';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { UserContext } from 'src/context/UserContext';
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginView = () => {
   const classes = useStyles();
+  const alert = useAlert();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, seterror] = useState('');
@@ -59,9 +61,6 @@ const LoginView = () => {
             onSubmit={(values) => {
               setLoading(true);
               seterror('');
-              // const token = localStorage.getItem('Atoken');
-              // axios.defaults.headers.common.Authorization = token;
-              // console.log(token);
               delete axios.defaults.headers.common.Authorization;
               axios
                 .post(`${baseUrl}/auth/local`, values)
@@ -71,12 +70,16 @@ const LoginView = () => {
                   axios.defaults.headers.common.Authorization = Atoken;
                   setAuthenticated(true);
                   setUser(res.data.user);
+                  setTimeout(() => {
+                    alert.success(`Login sucessful, Welcome ${res.data.user.username}`);
+                  }, 500);
                   navigate('/portal/dashboard', { replace: true });
                 })
                 .catch((err) => {
-                  console.log(err.response.data.message[0].messages[0].message);
+                  console.log(err.response);
                   setLoading(false);
-                  seterror(err.response.data.message[0].messages[0].message);
+                  alert.error('Opps something went wrong');
+                  seterror(err.response);
                 });
             }}
           >

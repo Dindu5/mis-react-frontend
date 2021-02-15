@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { UserContext } from 'src/context/UserContext';
 import {
   AppBar,
   Box,
@@ -28,6 +29,15 @@ const TopBar = ({
   ...rest
 }) => {
   const classes = useStyles();
+  const { setAuthenticated } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    console.log('logout');
+    localStorage.removeItem('Atoken');
+    setAuthenticated(false);
+    navigate('/login', { replace: true });
+  };
 
   return (
     <AppBar
@@ -41,11 +51,9 @@ const TopBar = ({
           <h4 style={{ marginLeft: '8px', color: 'white', fontFamily: 'roboto' }}>CSC-201 Portal</h4>
         </RouterLink>
         <Box flexGrow={1} />
-        <Hidden mdDown>
-          <IconButton color="inherit">
-            <InputIcon />
-          </IconButton>
-        </Hidden>
+        <IconButton color="inherit" onClick={() => { logout(); }}>
+          <InputIcon />
+        </IconButton>
         <Hidden lgUp>
           <IconButton
             color="inherit"

@@ -51,9 +51,9 @@ const Dashboard = () => {
           setAllStudents(responseTwo.data);
           setSchools(responesThree.data);
           console.log('school', schools);
-          const sortedActivities = responseTwo.data.slice(0, 7).sort((a, b) => (
+          const sortedActivities = responseTwo.data.sort((a, b) => (
             new Date(b.created_at) - new Date(a.created_at)
-          ));
+          )).slice(0, 10);
           console.log('sortedActivities', sortedActivities);
           setstudentsToday(sortedActivities);
           console.log(responseOne, responseTwo, responesThree);
@@ -63,8 +63,6 @@ const Dashboard = () => {
         console.error(errors);
       });
   }, []);
-
-  // console.log('all', allStudents);
 
   return (
     <Page

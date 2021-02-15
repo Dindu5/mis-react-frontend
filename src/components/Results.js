@@ -3,7 +3,7 @@ import moment from 'moment';
 import {
   Typography,
 } from '@material-ui/core';
-
+import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -47,6 +47,7 @@ const Results = ({ students }) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const navigate = useNavigate();
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -77,7 +78,14 @@ const Results = ({ students }) => {
           <TableBody>
             {students.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((student) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={student.id}>
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={student.id}
+                  className="table-row-student"
+                  onClick={() => { navigate(`/portal/student/${student.id}`, { replace: true }); }}
+                >
                   <TableCell>
                     <Typography
                       color="textPrimary"

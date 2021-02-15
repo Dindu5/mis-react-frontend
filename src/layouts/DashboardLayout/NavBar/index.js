@@ -62,9 +62,9 @@ const items = [
     title: 'SMAT'
   },
   {
-    href: '/portal/shot',
+    href: '/portal/soht',
     icon: DatabaseIcon,
-    title: 'SHOT'
+    title: 'SOHT'
   },
   {
     href: '/portal/scit',

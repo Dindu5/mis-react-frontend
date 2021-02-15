@@ -11,6 +11,7 @@ import SohtListView from 'src/views/soht/CustomerListView';
 import ScitListView from 'src/views/scit/CustomerListView';
 import SmatListView from 'src/views/smat/CustomerListView';
 import DashboardView from 'src/views/reports/DashboardView';
+import StudentView from 'src/views/student/AccountView';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import ProductListView from 'src/views/product/ProductListView';
@@ -33,6 +34,14 @@ const routes = (authenticated) => [
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'products', element: <ProductListView /> },
       { path: 'settings', element: <SettingsView /> },
+      { path: '*', element: <Navigate to="/404" /> }
+    ]
+  },
+  {
+    path: 'portal/student',
+    element: authenticated ? <DashboardLayout /> : <Navigate to="/login" />,
+    children: [
+      { path: ':slug', element: <StudentView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
