@@ -21,6 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'src/context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,7 @@ const ProductList = () => {
   const { user } = useContext(UserContext);
   const [loading, setloading] = useState(false);
   const alert = useAlert();
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     firstname: '',
     lastname: '',
@@ -90,16 +92,17 @@ const ProductList = () => {
         console.log(res);
         setloading(false);
         alert.success('New Student successfully added');
-        setValues({
-          firstname: '',
-          lastname: '',
-          othernames: '',
-          email: '',
-          regno: '',
-          level: '',
-          faculty: '',
-          department: '',
-        });
+        navigate(`/portal/student/${res.data.id}`, { replace: true });
+        // setValues({
+        //   firstname: '',
+        //   lastname: '',
+        //   othernames: '',
+        //   email: '',
+        //   regno: '',
+        //   level: '',
+        //   faculty: '',
+        //   department: '',
+        // });
       })
       .catch((err) => {
         if (err.request) {
