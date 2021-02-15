@@ -13,8 +13,8 @@ import {
 } from '@material-ui/core';
 import {
   BarChart as BarChartIcon,
-  Settings as SettingsIcon,
-  User as UserIcon,
+  // Settings as SettingsIcon,
+  // User as UserIcon,
   Users as UsersIcon,
   Database as DatabaseIcon
 } from 'react-feather';
@@ -71,16 +71,16 @@ const items = [
     icon: DatabaseIcon,
     title: 'SCIT'
   },
-  {
-    href: '/portal/account',
-    icon: UserIcon,
-    title: 'Account'
-  },
-  {
-    href: '/portal/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  },
+  // {
+  //   href: '/portal/account',
+  //   icon: UserIcon,
+  //   title: 'Account'
+  // },
+  // {
+  //   href: '/portal/settings',
+  //   icon: SettingsIcon,
+  //   title: 'Settings'
+  // },
   // {
   //   href: '/login',
   //   icon: LockIcon,
